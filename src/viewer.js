@@ -394,9 +394,18 @@ document.addEventListener(
 	});
 })();
 
+function getPdfUrl() {
+	const urlArr = window.location.href.split('?');
+	if (urlArr.length < 2) throw new Error('需在url中将pdf地址作为参数传入');
+	const paramName = urlArr[1].split('=')[0];
+	if (paramName !== 'file') throw new Error('url中pdf地址参数的参数名应为file');
+	return urlArr[1].split('=')[1];
+}
+
 // We need to delay opening until all HTML is loaded.
 PDFViewerApplication.animationStartedPromise.then(function() {
 	PDFViewerApplication.open({
-		url: DEFAULT_URL
+		// url: DEFAULT_URL
+		url: getPdfUrl()
 	});
 });
