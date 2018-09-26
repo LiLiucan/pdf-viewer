@@ -32,7 +32,7 @@ var CMAP_PACKED = true;
 // pdfjsLib.GlobalWorkerOptions.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
 pdfjsLib.GlobalWorkerOptions.workerSrc = require('pdfjs-dist/build/pdf.worker.entry');
 
-var DEFAULT_URL = 'http://cn.gwtest.swaqds.com/zzb/test.pdf';
+var DEFAULT_URL = 'http://zzb.gwtest.swaqds.com/pdf/test.pdf';
 var DEFAULT_SCALE_DELTA = 1.1;
 var MIN_SCALE = 0.25;
 var MAX_SCALE = 10.0;
@@ -395,11 +395,11 @@ document.addEventListener(
 })();
 
 function getPdfUrl() {
-	const urlArr = window.location.href.split('?');
-	if (urlArr.length < 2) throw new Error('需在url中将pdf地址作为参数传入');
-	const paramName = urlArr[1].split('=')[0];
-	if (paramName !== 'file') throw new Error('url中pdf地址参数的参数名应为file');
-	return urlArr[1].split('=')[1];
+	const searchStr = window.location.search;
+	const searchPrams = new URLSearchParams(searchStr);
+	const fileUrl = searchPrams.get('file')
+	if (!fileUrl) throw new Error('需在url中将pdf地址作为参数传入');
+	return fileUrl;
 }
 
 // We need to delay opening until all HTML is loaded.
