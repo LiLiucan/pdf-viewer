@@ -25,11 +25,10 @@ if (!pdfjsLib.getDocument || !pdfjsViewer.PDFViewer) {
 
 var USE_ONLY_CSS_ZOOM = true;
 var TEXT_LAYER_MODE = 0; // DISABLE
-var MAX_IMAGE_SIZE = 1024 * 1024;
+var MAX_IMAGE_SIZE = 1024 * 1024 * 100;//这是设置图片最大尺寸，不然扫描版的pdf不能正常显示
 var CMAP_URL = '../../node_modules/pdfjs-dist/cmaps/';
 var CMAP_PACKED = true;
 
-// pdfjsLib.GlobalWorkerOptions.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
 pdfjsLib.GlobalWorkerOptions.workerSrc = require('pdfjs-dist/build/pdf.worker.entry');
 
 var DEFAULT_URL = 'http://zzb.gwtest.swaqds.com/pdf/test.pdf';
