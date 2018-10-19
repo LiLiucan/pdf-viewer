@@ -4,8 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "parcel src/viewer.html",
-		"build": "parcel build src/viewer.html",
+		"start": "node scripts/start.js",
+		"build": "webpack --config webpack.config.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -15,6 +15,15 @@
 		"pdfjs-dist": "^2.0.489"
 	},
 	"devDependencies": {
-		"cssnano": "^4.1.0"
+		"clean-webpack-plugin": "^0.1.19",
+		"css-loader": "^1.0.0",
+		"cssnano": "^4.1.0",
+		"file-loader": "^2.0.0",
+		"html-webpack-plugin": "^3.2.0",
+		"style-loader": "^0.23.1",
+		"uglifyjs-webpack-plugin": "^2.0.1",
+		"webpack": "^4.21.0",
+		"webpack-cli": "^3.1.2",
+		"webpack-dev-server": "^3.1.9"
 	}
 }

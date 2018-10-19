@@ -16,16 +16,18 @@
 
 'use strict';
 
-const pdfjsLib = require('pdfjs-dist/build/pdf');
-const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer');
+import './index.css';
+import 'pdfjs-dist/web/pdf_viewer.css';
 
+var pdfjsLib = require('pdfjs-dist/build/pdf');
+var pdfjsViewer = require('pdfjs-dist/web/pdf_viewer');
 if (!pdfjsLib.getDocument || !pdfjsViewer.PDFViewer) {
 	alert('Please build the pdfjs-dist library using\n `gulp dist-install`');
 }
 
 var USE_ONLY_CSS_ZOOM = true;
 var TEXT_LAYER_MODE = 0; // DISABLE
-var MAX_IMAGE_SIZE = 1024 * 1024 * 100;//这是设置图片最大尺寸，不然扫描版的pdf不能正常显示
+var MAX_IMAGE_SIZE = 1024 * 1024 * 100; //这是设置图片最大尺寸，不然扫描版的pdf不能正常显示
 var CMAP_URL = '../../node_modules/pdfjs-dist/cmaps/';
 var CMAP_PACKED = true;
 
@@ -394,9 +396,9 @@ document.addEventListener(
 })();
 
 function getPdfUrl() {
-	const searchStr = window.location.search;
-	const searchPrams = new URLSearchParams(searchStr);
-	const fileUrl = searchPrams.get('file')
+	var searchStr = window.location.search;
+	var searchPrams = new URLSearchParams(searchStr);
+	var fileUrl = searchPrams.get('file');
 	if (!fileUrl) throw new Error('需在url中将pdf地址作为参数传入');
 	return fileUrl;
 }
