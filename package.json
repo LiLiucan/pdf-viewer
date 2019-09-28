@@ -12,7 +12,8 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"pdfjs-dist": "^2.0.489"
+		"pdfjs-dist": "^2.0.489",
+		"url-search-params-polyfill": "^7.0.0"
 	},
 	"devDependencies": {
 		"cssnano": "^4.1.0"

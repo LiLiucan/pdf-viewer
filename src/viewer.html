@@ -19,10 +19,7 @@ limitations under the License.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>PDF.js viewer</title>
-
-    <link rel="stylesheet" href="../node_modules/pdfjs-dist/web/pdf_viewer.css">
-    <link rel="stylesheet" type="text/css" href="viewer.css">
+    <title></title>
   </head>
 
   <body>
@@ -58,7 +55,7 @@ limitations under the License.
       <textarea id="errorMoreInfo" hidden="true" readonly="readonly"></textarea>
     </div>
 
-    <footer>
+    <footer id='footer' style="display:none">
       <button class="toolbarButton pageUp" title="Previous Page" id="previous"></button>
       <button class="toolbarButton pageDown" title="Next Page" id="next"></button>
 
@@ -67,7 +64,7 @@ limitations under the License.
       <button class="toolbarButton zoomOut" title="Zoom Out" id="zoomOut"></button>
       <button class="toolbarButton zoomIn" title="Zoom In" id="zoomIn"></button>
     </footer>
-
-     <script src="viewer.js"></script>
+    <script src="viewer.js"></script>
   </body>
 </html>
+

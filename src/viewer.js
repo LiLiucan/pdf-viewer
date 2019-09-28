@@ -12,9 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* globals pdfjsLib, pdfjsViewer */
 
-'use strict';
+import 'pdfjs-dist/web/pdf_viewer.css';
+import './viewer.css';
+if(!window.URLSearchParams)
+	require('url-search-params-polyfill');
 
 const pdfjsLib = require('pdfjs-dist/build/pdf');
 const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer');
@@ -25,13 +27,13 @@ if (!pdfjsLib.getDocument || !pdfjsViewer.PDFViewer) {
 
 var USE_ONLY_CSS_ZOOM = true;
 var TEXT_LAYER_MODE = 0; // DISABLE
-var MAX_IMAGE_SIZE = 1024 * 1024 * 100;//这是设置图片最大尺寸，不然扫描版的pdf不能正常显示
-var CMAP_URL = '../../node_modules/pdfjs-dist/cmaps/';
+var MAX_IMAGE_SIZE = 1024 * 1024 * 100;
+var CMAP_URL = './cmaps/';
 var CMAP_PACKED = true;
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = require('pdfjs-dist/build/pdf.worker.entry');
 
-var DEFAULT_URL = 'http://zzb.gwtest.swaqds.com/pdf/test.pdf';
+// var DEFAULT_URL = 'http://zzb.gwtest.swaqds.com/pdf/test.pdf';
 var DEFAULT_SCALE_DELTA = 1.1;
 var MIN_SCALE = 0.25;
 var MAX_SCALE = 10.0;
@@ -62,7 +64,7 @@ var PDFViewerApplication = {
 
 		var url = params.url;
 		var self = this;
-		this.setTitleUsingUrl(url);
+		// this.setTitleUsingUrl(url);
 
 		// Loading document.
 		var loadingTask = pdfjsLib.getDocument({
@@ -73,8 +75,9 @@ var PDFViewerApplication = {
 		});
 		this.pdfLoadingTask = loadingTask;
 
+		const pdfFileSize = getPdfFileSize();
 		loadingTask.onProgress = function(progressData) {
-			self.progress(progressData.loaded / progressData.total);
+			self.progress(progressData.loaded / pdfFileSize);
 		};
 
 		return loadingTask.promise.then(
@@ -86,7 +89,7 @@ var PDFViewerApplication = {
 				self.pdfHistory.initialize(pdfDocument.fingerprint);
 
 				self.loadingBar.hide();
-				self.setTitleUsingMetadata(pdfDocument);
+				// self.setTitleUsingMetadata(pdfDocument);
 			},
 			function(exception) {
 				var message = exception && exception.message;
@@ -306,6 +309,7 @@ var PDFViewerApplication = {
 	},
 
 	initUI: function pdfViewInitUI() {
+		this.setTitle(getPdfFileName())
 		var linkService = new pdfjsViewer.PDFLinkService();
 		this.pdfLinkService = linkService;
 
@@ -377,9 +381,15 @@ var PDFViewerApplication = {
 	}
 };
 
+function showFooter() {
+	const elFooter = document.querySelector('#footer');
+	elFooter.style.display = 'block';
+}
+
 document.addEventListener(
 	'DOMContentLoaded',
 	function() {
+		showFooter();//未防止footer显示没有样式的状态，默认隐藏footer，页面加载完成后再显示出来
 		PDFViewerApplication.initUI();
 	},
 	true
@@ -394,12 +404,26 @@ document.addEventListener(
 })();
 
 function getPdfUrl() {
-	const searchStr = window.location.search;
-	const searchPrams = new URLSearchParams(searchStr);
-	const fileUrl = searchPrams.get('file')
+	let fileUrl = getSearchParams().get('file')
 	if (!fileUrl) throw new Error('需在url中将pdf地址作为参数传入');
 	return fileUrl;
 }
+
+function getPdfFileName() {
+	let fileName = getSearchParams().get('fileName');
+	if (!fileName) fileName = '';
+	return fileName;
+}
+
+function getPdfFileSize() {
+	return getSearchParams().get('fileSize');
+}
+
+function getSearchParams() {
+	const searchStr = window.location.search;
+	return new URLSearchParams(searchStr);
+}
+
 
 // We need to delay opening until all HTML is loaded.
 PDFViewerApplication.animationStartedPromise.then(function() {
