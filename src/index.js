@@ -14,7 +14,7 @@
  */
 
 import 'pdfjs-dist/web/pdf_viewer.css';
-import './viewer.css';
+import './index.css';
 if(!window.URLSearchParams)
 	require('url-search-params-polyfill');
 
