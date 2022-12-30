@@ -12,7 +12,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"pdfjs-dist": "^2.0.489"
+		"pdfjs-dist": "^2.16.105"
 	},
 	"devDependencies": {
 		"cssnano": "^4.1.0"
